@@ -465,6 +465,78 @@ main {
 }
 
 
+/* ========================================
+   目次
+======================================== */
+
+.toc {
+    width: 100%;
+
+    margin-bottom: 28px;
+
+    padding: 25px 25px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #1681d4;
+
+    border-radius: 5px;
+}
+
+
+/* 目次タイトル */
+
+.toc h2 {
+    margin: 0 0 15px;
+
+    padding-bottom: 10px;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #111111;
+
+    border-bottom: 1px dotted #1681d4;
+}
+
+
+/* 目次リスト */
+
+.toc ul {
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+
+/* 各項目 */
+
+.toc li {
+    padding: 10px 5px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+/* 最後の項目 */
+
+.toc li:last-child {
+    border-bottom: none;
+}
+
+
+/* リンク */
+
+.toc a {
+    color: #087dcc;
+
+    font-size: 15px;
+
+    text-decoration: underline;
+}
 
 /* ========================================
    検索ボタン
