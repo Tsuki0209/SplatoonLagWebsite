@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +10,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    <!-- =========================
+    <!-- ========================================
          ヘッダー
-    ========================== -->
+    ========================================= -->
     <header class="site-header">
 
         <div class="header-card">
@@ -28,7 +30,12 @@
 
 
         <!-- ハンバーガーメニュー -->
-        <button class="menu-button" aria-label="メニュー">
+
+        <button
+            class="menu-button"
+            type="button"
+            aria-label="メニュー"
+        >
 
             <span></span>
             <span></span>
@@ -39,16 +46,18 @@
     </header>
 
 
-    <!-- =========================
-         メイン
-    ========================== -->
+
+    <!-- ========================================
+         メインコンテンツ
+    ========================================= -->
+
     <main>
 
 
-        <!-- =========================
+        <!-- ====================================
              ラグとは？カード
-             このカードだけクリップで留める
-        ========================== -->
+        ===================================== -->
+
         <section class="article-card">
 
             <!-- クリップ -->
@@ -56,6 +65,7 @@
 
 
             <h2>ラグとは？</h2>
+
 
             <p>
                 オンラインゲームで発生するラグについて、
@@ -66,19 +76,60 @@
 
 
 
-        <!-- =========================
-             赤枠
-             「ラグとは？」カードとは完全に別
-        ========================== -->
+        <!-- ====================================
+             注意
+             中身は空
+        ===================================== -->
+
         <section class="notice">
 
             <h3>注意</h3>
 
+        </section>
+
+
+
+        <!-- ====================================
+             検索
+        ===================================== -->
+
+        <section class="search-card">
+
+            <h2>検索</h2>
+
+
+            <form
+                class="search-form"
+                action="#"
+                method="get"
+            >
+
+                <div class="search-input-wrapper">
+
+                    <span class="search-icon">⌕</span>
+
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="サイト内検索"
+                        aria-label="サイト内検索"
+                    >
+
+                </div>
+
+
+                <button type="submit">
+                    検索
+                </button>
+
+            </form>
 
         </section>
 
 
     </main>
 
+
 </body>
+
 </html>
