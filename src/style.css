@@ -1,0 +1,376 @@
+/* =========================
+   基本設定
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff;
+
+    color: #333333;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Yu Gothic",
+        "Hiragino Kaku Gothic ProN",
+        Meiryo,
+        sans-serif;
+}
+
+
+/* =========================
+   ヘッダー
+========================= */
+
+.site-header {
+    position: relative;
+
+    width: min(720px, 92%);
+
+    margin: 0 auto;
+
+    padding: 18px 0 22px;
+
+    border-bottom: 2px solid #1681d4;
+}
+
+
+/* タイトルカード */
+
+.header-card {
+    width: 100%;
+
+    min-height: 135px;
+
+    padding: 27px 90px 23px 30px;
+
+    background: #f8fcff;
+
+    border: 1px solid #c4cdd3;
+
+    box-shadow:
+        0 3px 3px rgba(0, 0, 0, 0.12);
+}
+
+
+/* サイトタイトル */
+
+.header-card h1 {
+    margin: 0 0 8px;
+
+    font-size: clamp(30px, 5vw, 44px);
+
+    font-weight: 800;
+
+    color: #1681d4;
+
+    letter-spacing: 0.04em;
+}
+
+
+/* サブタイトル */
+
+.header-card p {
+    margin: 0;
+
+    font-size: 15px;
+
+    color: #555555;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   ハンバーガーメニュー
+========================= */
+
+.menu-button {
+    position: absolute;
+
+    top: 28px;
+    right: 12px;
+
+    width: 58px;
+    height: 58px;
+
+    padding: 0;
+
+    border: 1px solid #d5d5d5;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+/* ハンバーガーの線 */
+
+.menu-button span {
+    display: block;
+
+    width: 23px;
+    height: 2px;
+
+    background: #333333;
+}
+
+
+/* =========================
+   メイン
+========================= */
+
+main {
+    width: min(720px, 92%);
+
+    margin: 35px auto;
+}
+
+
+/* =========================
+   「ラグとは？」カード
+========================= */
+
+.article-card {
+    position: relative;
+
+    width: 100%;
+
+    margin-bottom: 35px;
+
+    padding: 30px 25px 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #cfcfcf;
+
+    box-shadow:
+        0 3px 4px rgba(0, 0, 0, 0.18);
+}
+
+
+/* 「ラグとは？」 */
+
+.article-card h2 {
+    margin: 0 0 15px;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #222222;
+}
+
+
+/* 説明文 */
+
+.article-card p {
+    margin: 0;
+
+    font-size: 15px;
+
+    line-height: 1.9;
+
+    color: #333333;
+}
+
+
+/* =========================
+   クリップ
+   「ラグとは？」カードだけ
+========================= */
+
+.paper-clip {
+    position: absolute;
+
+    top: -17px;
+    right: 20px;
+
+    width: 18px;
+    height: 62px;
+
+    border: 4px solid #333333;
+
+    border-left-color: transparent;
+
+    border-radius: 12px;
+
+    transform: rotate(8deg);
+
+    z-index: 5;
+}
+
+
+/* クリップ内側 */
+
+.paper-clip::after {
+    content: "";
+
+    position: absolute;
+
+    top: 8px;
+    left: -4px;
+
+    width: 12px;
+    height: 40px;
+
+    border: 3px solid #777777;
+
+    border-left-color: transparent;
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   赤枠
+   カードとは完全に別
+========================= */
+
+.notice {
+    position: relative;
+
+    width: 100%;
+
+    padding: 20px 25px;
+
+    background: #ffffff;
+
+    border: 3px solid #ff6b6b;
+
+    border-radius: 8px;
+}
+
+
+/* 赤枠のタイトル */
+
+.notice h3 {
+    margin: -36px 0 12px;
+
+    width: fit-content;
+
+    padding: 0 8px;
+
+    background: #ffffff;
+
+    color: #ff6666;
+
+    font-size: 20px;
+
+    font-weight: 600;
+}
+
+
+/* リスト */
+
+.notice ul {
+    margin: 0;
+
+    padding-left: 22px;
+}
+
+
+/* リスト項目 */
+
+.notice li {
+    margin: 10px 0;
+
+    font-size: 15px;
+}
+
+
+/* リンク */
+
+.notice a {
+    color: #087dcc;
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   スマートフォン
+========================= */
+
+@media (max-width: 600px) {
+
+    .site-header,
+    main {
+        width: 94%;
+    }
+
+
+    /* ヘッダー */
+
+    .header-card {
+        min-height: 120px;
+
+        padding: 24px 70px 20px 20px;
+    }
+
+
+    .header-card h1 {
+        font-size: 30px;
+    }
+
+
+    .header-card p {
+        font-size: 13px;
+    }
+
+
+    /* メニュー */
+
+    .menu-button {
+        top: 26px;
+        right: 8px;
+
+        width: 50px;
+        height: 50px;
+    }
+
+
+    /* ラグとは？カード */
+
+    .article-card {
+        padding: 28px 18px 22px;
+    }
+
+
+    .article-card h2 {
+        font-size: 22px;
+    }
+
+
+    .article-card p {
+        font-size: 14px;
+    }
+
+
+    /* 赤枠 */
+
+    .notice {
+        padding: 18px;
+    }
+
+}
