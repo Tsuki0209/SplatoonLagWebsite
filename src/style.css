@@ -6,13 +6,11 @@
     box-sizing: border-box;
 }
 
-
 html,
 body {
     margin: 0;
     padding: 0;
 }
-
 
 body {
     background: #ffffff;
@@ -36,7 +34,6 @@ body {
 ======================================== */
 
 .site-header {
-
     position: relative;
 
     width: min(720px, 92%);
@@ -55,7 +52,6 @@ body {
 ======================================== */
 
 .header-card {
-
     width: 100%;
 
     min-height: 135px;
@@ -72,10 +68,11 @@ body {
 
 
 
-/* サイトタイトル */
+/* ========================================
+   サイトタイトル
+======================================== */
 
 .header-card h1 {
-
     margin: 0 0 8px;
 
     font-size: clamp(30px, 5vw, 44px);
@@ -89,10 +86,11 @@ body {
 
 
 
-/* サブタイトル */
+/* ========================================
+   サブタイトル
+======================================== */
 
 .header-card p {
-
     margin: 0;
 
     font-size: 15px;
@@ -109,7 +107,6 @@ body {
 ======================================== */
 
 .menu-button {
-
     position: absolute;
 
     top: 28px;
@@ -135,12 +132,11 @@ body {
     align-items: center;
 
     gap: 6px;
+
+    z-index: 1001;
 }
 
-
-
 .menu-button span {
-
     display: block;
 
     width: 23px;
@@ -156,7 +152,6 @@ body {
 ======================================== */
 
 main {
-
     width: min(720px, 92%);
 
     margin: 35px auto;
@@ -165,11 +160,10 @@ main {
 
 
 /* ========================================
-   「ラグとは？」カード
+   ラグとは？カード
 ======================================== */
 
 .article-card {
-
     position: relative;
 
     width: 100%;
@@ -188,25 +182,11 @@ main {
 
 
 
-/* タイトル */
-
-.article-card h2 {
-
-    margin: 0 0 15px;
-
-    font-size: 24px;
-
-    font-weight: 700;
-
-    color: #222222;
-}
-
-
-
-/* 説明文 */
+/* ========================================
+   説明文
+======================================== */
 
 .article-card p {
-
     margin: 0;
 
     font-size: 15px;
@@ -218,22 +198,18 @@ main {
 
 
 
-
-
-
 /* ========================================
    注意
 ======================================== */
 
 .notice {
-
     position: relative;
 
     width: 100%;
 
     min-height: 100px;
 
-    margin-bottom: 28px;
+    margin-bottom: 32px;
 
     padding: 20px 25px;
 
@@ -246,11 +222,12 @@ main {
 
 
 
-/* 「注意」の文字 */
+/* ========================================
+   注意タイトル
+======================================== */
 
 .notice h3 {
-
-    margin: -36px 0 0;
+    margin: -36px 0 18px;
 
     width: fit-content;
 
@@ -268,11 +245,179 @@ main {
 
 
 /* ========================================
+   注意本文
+======================================== */
+
+.notice p {
+    margin: 0 0 12px;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+.notice p:last-child {
+    margin-bottom: 0;
+}
+
+
+
+/* ========================================
+   タイトルメニュー
+======================================== */
+
+.diamond-menu {
+    width: 100%;
+
+    margin-bottom: 35px;
+}
+
+
+
+/* ========================================
+   タイトルラベル
+   「通信状況が不安定になっています」
+   のような黒いまだら模様
+======================================== */
+
+.diamond-title {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    height: 68px;
+
+    margin-bottom: 10px;
+
+    color: #ffffff;
+
+    border: none;
+
+    overflow: hidden;
+
+    background-color: #242424;
+
+    background-image:
+        radial-gradient(
+            ellipse at 20% 30%,
+            rgba(90, 90, 90, 0.45) 0%,
+            rgba(45, 45, 45, 0.2) 18%,
+            transparent 38%
+        ),
+
+        radial-gradient(
+            ellipse at 75% 65%,
+            rgba(75, 75, 75, 0.5) 0%,
+            rgba(40, 40, 40, 0.25) 20%,
+            transparent 42%
+        ),
+
+        radial-gradient(
+            ellipse at 50% 10%,
+            rgba(100, 100, 100, 0.25) 0%,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            ellipse at 90% 20%,
+            rgba(15, 15, 15, 0.8) 0%,
+            transparent 30%
+        ),
+
+        radial-gradient(
+            ellipse at 10% 85%,
+            rgba(10, 10, 10, 0.75) 0%,
+            transparent 35%
+        );
+}
+
+
+
+/* ========================================
+   タイトル文字
+======================================== */
+
+.diamond-title span {
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 25px;
+
+    font-weight: 400;
+
+    letter-spacing: 0.04em;
+
+    color: #ffffff;
+}
+
+
+
+/* ========================================
+   ラグ1～微ラグ3
+======================================== */
+
+.lag-links {
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 0;
+
+    margin-bottom: 28px;
+}
+
+
+
+/* ========================================
+   青文字リンク
+======================================== */
+
+.lag-links a {
+    display: block;
+
+    width: 100%;
+
+    padding: 10px 8px;
+
+    color: #087dcc;
+
+    font-size: 15px;
+
+    text-decoration: underline;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+
+/* ========================================
+   青文字リンク ホバー
+======================================== */
+
+.lag-links a:hover {
+    color: #005fa8;
+
+    background: #f5faff;
+}
+
+
+
+/* ========================================
    検索カード
 ======================================== */
 
 .search-card {
-
     width: 100%;
 
     padding: 45px 20px 30px;
@@ -291,7 +436,6 @@ main {
 ======================================== */
 
 .search-card h2 {
-
     position: relative;
 
     margin: 0 0 30px;
@@ -309,10 +453,11 @@ main {
 
 
 
-/* 左側の青い縦線 */
+/* ========================================
+   左側の青い縦線
+======================================== */
 
 .search-card h2::before {
-
     content: "";
 
     position: absolute;
@@ -333,7 +478,6 @@ main {
 ======================================== */
 
 .search-form {
-
     display: flex;
 
     width: 100%;
@@ -341,10 +485,11 @@ main {
 
 
 
-/* 入力欄 */
+/* ========================================
+   入力欄
+======================================== */
 
 .search-input-wrapper {
-
     position: relative;
 
     flex: 1;
@@ -354,10 +499,11 @@ main {
 
 
 
-/* 検索アイコン */
+/* ========================================
+   検索アイコン
+======================================== */
 
 .search-icon {
-
     position: absolute;
 
     left: 11px;
@@ -376,10 +522,11 @@ main {
 
 
 
-/* テキスト入力 */
+/* ========================================
+   テキスト入力
+======================================== */
 
 .search-input-wrapper input {
-
     width: 100%;
 
     height: 30px;
@@ -401,103 +548,33 @@ main {
 
 
 
-/* プレースホルダー */
+/* ========================================
+   プレースホルダー
+======================================== */
 
 .search-input-wrapper input::placeholder {
-
     color: #888888;
 }
 
 
 
-/* 入力時 */
+/* ========================================
+   入力時
+======================================== */
 
 .search-input-wrapper input:focus {
-
     border-color: #1681d4;
 }
 
 
-/* ========================================
-   目次
-======================================== */
-
-.toc {
-    width: 100%;
-
-    margin-bottom: 28px;
-
-    padding: 25px 25px 20px;
-
-    background: #ffffff;
-
-    border: 1px solid #1681d4;
-
-    border-radius: 5px;
-}
-
-
-/* 目次タイトル */
-
-.toc h2 {
-    margin: 0 0 15px;
-
-    padding-bottom: 10px;
-
-    font-size: 20px;
-
-    font-weight: 700;
-
-    color: #111111;
-
-    border-bottom: 1px dotted #1681d4;
-}
-
-
-/* 目次リスト */
-
-.toc ul {
-    margin: 0;
-
-    padding: 0;
-
-    list-style: none;
-}
-
-
-/* 各項目 */
-
-.toc li {
-    padding: 10px 5px;
-
-    border-bottom: 1px solid #eeeeee;
-}
-
-
-/* 最後の項目 */
-
-.toc li:last-child {
-    border-bottom: none;
-}
-
-
-/* リンク */
-
-.toc a {
-    color: #087dcc;
-
-    font-size: 15px;
-
-    text-decoration: underline;
-}
 
 /* ========================================
    検索ボタン
 ======================================== */
 
 .search-form button {
-
     width: 45px;
+
     height: 30px;
 
     margin-left: 5px;
@@ -517,11 +594,205 @@ main {
 
 
 
-/* ボタンにマウスを乗せたとき */
+/* ========================================
+   検索ボタン ホバー
+======================================== */
 
 .search-form button:hover {
-
     background: #f3f3f3;
+}
+
+
+
+/* ========================================
+   グローバルメニュー
+   上から降りる
+======================================== */
+
+.global-nav {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    max-height: 100vh;
+
+    overflow-y: auto;
+
+    padding: 96px 0 24px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    border-bottom: 1px solid #c4cdd3;
+
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.08);
+
+    transform: translateY(-100%);
+
+    visibility: hidden;
+
+    transition:
+        transform 0.3s ease,
+        visibility 0.3s ease;
+}
+
+
+
+/* ========================================
+   メニュー表示時
+======================================== */
+
+.global-nav.is-open {
+    transform: translateY(0);
+
+    visibility: visible;
+}
+
+
+
+/* ========================================
+   グローバルメニュー リスト
+======================================== */
+
+.global-nav ul {
+    width: min(720px, 92%);
+
+    margin: 0 auto;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+
+
+/* ========================================
+   メニュー項目
+======================================== */
+
+.global-nav li {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.global-nav li:last-child {
+    border-bottom: none;
+}
+
+
+/* ========================================
+   タイミング解説リンク
+======================================== */
+
+.timing-links {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 0;
+
+    margin-bottom: 28px;
+}
+
+
+/* ========================================
+   タイミング解説 青文字リンク
+======================================== */
+
+.timing-links a {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 10px 8px;
+
+    color: #087dcc;
+
+    font-size: 15px;
+
+    text-decoration: underline;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+/* ========================================
+   ホバー
+======================================== */
+
+.timing-links a:hover {
+
+    color: #005fa8;
+
+    background: #f5faff;
+}
+
+/* ========================================
+   メニューリンク
+======================================== */
+
+.global-nav a {
+    display: block;
+
+    padding: 14px 5px;
+
+    color: #087dcc;
+
+    font-size: 15px;
+
+    text-decoration: none;
+}
+
+.global-nav a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* ========================================
+   背景オーバーレイ
+======================================== */
+
+.menu-overlay {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 999;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+
+
+/* ========================================
+   オーバーレイ表示時
+======================================== */
+
+.menu-overlay.is-open {
+    opacity: 1;
+
+    visibility: visible;
 }
 
 
@@ -532,184 +803,133 @@ main {
 
 @media (max-width: 600px) {
 
-
     .site-header,
     main {
-
         width: 94%;
     }
 
 
 
-    /* ヘッダー */
+    /* ====================================
+       ヘッダー
+    ==================================== */
 
     .header-card {
-
         min-height: 120px;
 
         padding: 24px 70px 20px 20px;
     }
 
-
-
     .header-card h1 {
-
         font-size: 30px;
     }
 
-
-
     .header-card p {
-
         font-size: 13px;
     }
 
 
 
-    /* メニュー */
+    /* ====================================
+       ハンバーガーメニュー
+    ==================================== */
 
     .menu-button {
-
         top: 26px;
+
         right: 8px;
 
         width: 50px;
+
         height: 50px;
     }
 
 
 
-    /* ラグとは？ */
+    /* ====================================
+       ラグとは？
+    ==================================== */
 
     .article-card {
-
         padding: 28px 18px 22px;
     }
 
-
-
-    .article-card h2 {
-
-        font-size: 22px;
+    .article-card p {
+        font-size: 14px;
     }
 
 
 
-    .article-card p {
+    /* ====================================
+       注意
+    ==================================== */
+
+    .notice {
+        min-height: 90px;
+
+        padding: 18px;
+    }
+
+    .notice h3 {
+        margin-top: -34px;
+    }
+
+    .notice p {
+        font-size: 14px;
+
+        line-height: 1.8;
+    }
+
+
+
+    /* ====================================
+       黒いまだらタイトル
+    ==================================== */
+
+    .diamond-title {
+        height: 58px;
+
+        margin-bottom: 10px;
+    }
+
+    .diamond-title span {
+        font-size: 20px;
+    }
+
+
+
+    /* ====================================
+       ラグリンク
+    ==================================== */
+
+    .lag-links a {
+        padding: 10px 8px;
 
         font-size: 14px;
     }
 
 
 
-    /* 注意 */
-
-    .notice {
-
-        min-height: 90px;
-
-        padding: 18px;
-    }
-
-
-
-    /* 検索 */
+    /* ====================================
+       検索
+    ==================================== */
 
     .search-card {
-
         padding: 35px 15px 25px;
     }
 
-
-
     .search-form button {
-
         width: 50px;
     }
 
-}
 
-/* ========================================
-ハンバーガーメニュー（上から降りる）
-======================================== */
-.global-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  max-height: 100vh;
-  overflow-y: auto;
-  padding: 96px 0 24px;
-  background: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid #c4cdd3;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  transform: translateY(-100%);
-  visibility: hidden;
-  transition: transform 0.3s ease, visibility 0.3s ease;
-}
 
-.global-nav.is-open {
-  transform: translateY(0);
-  visibility: visible;
-}
+    /* ====================================
+       グローバルメニュー
+    ==================================== */
 
-.global-nav ul {
-  width: min(720px, 92%);
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-}
+    .global-nav {
+        padding-top: 84px;
+    }
 
-.global-nav li {
-  border-bottom: 1px solid #eeeeee;
-}
-
-.global-nav li:last-child {
-  border-bottom: none;
-}
-
-.global-nav a {
-  display: block;
-  padding: 14px 5px;
-  color: #087dcc;
-  font-size: 15px;
-  text-decoration: none;
-}
-
-.global-nav a:hover {
-  text-decoration: underline;
-}
-
-/* ハンバーガーボタンをメニューより手前に残す */
-.menu-button {
-  z-index: 1001;
-}
-
-@media (max-width: 600px) {
-  .global-nav {
-    padding-top: 84px;
-  }
-  
-}
-
-/* ========================================
-メニュー表示中の背景オーバーレイ
-======================================== */
-.menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
-  background: rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.menu-overlay.is-open {
-  opacity: 1;
-  visibility: visible;
 }
