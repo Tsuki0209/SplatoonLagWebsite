@@ -2,246 +2,1067 @@
 <html lang="ja">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Splatoon3 ラグバグ解説サイト</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>Splatoon ラグ解説サイト</title>
+
+
+    <style>
+
+        /* ========================================
+           基本設定
+        ======================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+
+            margin: 0;
+            padding: 0;
+
+            width: 100%;
+            min-height: 100%;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background: #f5f5f5;
+
+            color: #333;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                "Noto Sans JP",
+                sans-serif;
+
+            overflow-x: hidden;
+
+        }
+
+
+
+        /* ========================================
+           メイン
+        ======================================== */
+
+        .select-container {
+
+            width: min(900px, 92%);
+
+            margin: 0 auto;
+
+            padding: 70px 0;
+
+            text-align: center;
+
+        }
+
+
+
+        /* ========================================
+           タイトル
+        ======================================== */
+
+        .site-title {
+
+            margin-bottom: 45px;
+
+            transition:
+                opacity 0.35s ease,
+                filter 0.35s ease;
+
+        }
+
+
+        .site-title h1 {
+
+            margin: 0;
+
+            font-size: 36px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .site-title p {
+
+            margin: 12px 0 0;
+
+            color: #777;
+
+            font-size: 15px;
+
+        }
+
+
+
+        /* ========================================
+           カード一覧
+           （画像の縦横比にカードを合わせるため
+           　グリッドではなくflexで中央寄せ）
+        ======================================== */
+
+        .game-select {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            flex-wrap: wrap;
+
+            gap: 28px;
+
+        }
+
+
+
+        /* ========================================
+           画像カード
+           （余白なし・画像の実サイズに
+           　ぴったり合わせる）
+        ======================================== */
+
+        .game-card {
+
+            display: block;
+
+            width: auto;
+
+            padding: 0;
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            border-radius: 14px;
+
+            cursor: pointer;
+
+            overflow: hidden;
+
+            line-height: 0;
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.07);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                filter 0.35s ease,
+                opacity 0.35s ease;
+
+        }
+
+
+        .game-card img {
+
+            display: block;
+
+            height: 210px;
+
+            width: auto;
+
+            max-width: 100%;
+
+            object-fit: contain;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+
+        }
+
+
+        .game-card:hover {
+
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.13);
+
+        }
+
+
+
+        /* ========================================
+           背景オーバーレイ
+        ======================================== */
+
+        #focus-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 999;
+
+            background:
+                rgba(255, 255, 255, 0.30);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            backdrop-filter: blur(0);
+
+            -webkit-backdrop-filter: blur(0);
+
+            transition:
+                opacity 0.35s ease,
+                backdrop-filter 0.45s ease,
+                -webkit-backdrop-filter 0.45s ease;
+
+        }
+
+
+        body.opening #focus-overlay {
+
+            opacity: 1;
+
+            backdrop-filter: blur(10px);
+
+            -webkit-backdrop-filter: blur(10px);
+
+            pointer-events: auto;
+
+        }
+
+
+
+        /* ========================================
+           選択された元カード
+        ======================================== */
+
+        body.opening
+        .game-card:not(.selected) {
+
+            filter: blur(9px);
+
+            opacity: 0.30;
+
+            transform: scale(0.98);
+
+        }
+
+
+        body.opening
+        .site-title {
+
+            filter: blur(9px);
+
+            opacity: 0.20;
+
+        }
+
+
+
+        /* ========================================
+           中央へ移動する画像
+           （object-fit不要：常に元画像と
+           　同じ縦横比のまま拡縮する）
+        ======================================== */
+
+        #opening-image {
+
+            position: fixed;
+
+            z-index: 1001;
+
+            display: block;
+
+            margin: 0;
+
+            padding: 0;
+
+            border-radius: 10px;
+
+            background: #fff;
+
+            box-shadow:
+                0 25px 80px
+                rgba(0, 0, 0, 0.30);
+
+            transform-origin: center center;
+
+            pointer-events: none;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+
+            will-change:
+                left,
+                top,
+                width,
+                height;
+
+        }
+
+
+
+        /* ========================================
+           ローディングスピナー
+           （中央移動が終わり、開く直前に表示）
+        ======================================== */
+
+        #loading-spinner {
+
+            position: fixed;
+
+            z-index: 1002;
+
+            width: 42px;
+
+            height: 42px;
+
+            margin-left: -21px;
+
+            margin-top: -21px;
+
+            border-radius: 50%;
+
+            border: 3px solid rgba(0, 0, 0, 0.12);
+
+            border-top-color: rgba(0, 0, 0, 0.55);
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            transition: opacity 0.2s ease;
+
+            animation: spin 0.8s linear infinite;
+
+        }
+
+
+        #loading-spinner.visible {
+
+            opacity: 1;
+
+        }
+
+
+        @keyframes spin {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+
+        /* ========================================
+           スマホ
+        ======================================== */
+
+        @media (max-width: 650px) {
+
+            .select-container {
+
+                width: 92%;
+
+                padding:
+                    45px 0 50px;
+
+            }
+
+
+            .site-title {
+
+                margin-bottom: 30px;
+
+            }
+
+
+            .site-title h1 {
+
+                font-size: 28px;
+
+            }
+
+
+            .site-title p {
+
+                font-size: 14px;
+
+            }
+
+
+            .game-select {
+
+                flex-direction: column;
+
+                align-items: center;
+
+                gap: 20px;
+
+            }
+
+
+            .game-card img {
+
+                height: 180px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
 
-
-<!-- ========================================
-     背景を暗くするオーバーレイ
-======================================== -->
-
-<div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
-
-
-<!-- ========================================
-     グローバルメニュー
-======================================== -->
-
-<nav id="global-nav" class="global-nav" aria-label="メニュー" aria-hidden="true">
-
-    <ul>
-
-        <li>
-            <a href="#">ラグのタイミング解説</a>
-        </li>
-
-        <li>
-            <a href="#">ラグの知識</a>
-        </li>
-
-        <li>
-            <a href="#">テクニック</a>
-        </li>
-
-        <li>
-            <a href="#">ルート</a>
-        </li>
-
-    </ul>
-
-</nav>
-
-
-<script src="script.js" defer></script>
 
 
 <body>
 
 
     <!-- ========================================
-         ヘッダー
+         背景ぼかし
     ========================================= -->
 
-    <header class="site-header">
+    <div id="focus-overlay"></div>
 
-        <div class="header-card">
+
+
+    <!-- ========================================
+         メイン
+    ========================================= -->
+
+    <main class="select-container">
+
+
+        <!-- ====================================
+             タイトル
+        ==================================== -->
+
+        <div class="site-title">
 
             <h1>
-                Splatoon3 ラグ解説
+                Splatoon ラグ解説
             </h1>
 
             <p>
-                Splatoon３のラグについて詳しく解説するサイト
+                解説する作品を選択してください
             </p>
 
         </div>
 
 
-        <!-- ハンバーガーメニュー -->
 
-        <button
-            class="menu-button"
-            type="button"
-            aria-label="メニュー"
-        >
+        <!-- ====================================
+             ゲームカード
+        ==================================== -->
 
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="game-select">
 
-        </button>
 
-    </header>
+            <!-- ==================================
+                 Splatoon 2
+            ================================== -->
+
+            <a
+                href="splatoon2.html"
+                class="game-card"
+                data-target="splatoon2.html"
+            >
+
+                <img
+                    src="nintendo-music-splatoon-2-bgm.png"
+                    alt="Splatoon 2"
+                >
+
+            </a>
+
+
+
+            <!-- ==================================
+                 Splatoon 3
+            ================================== -->
+
+            <a
+                href="splatoon3.html"
+                class="game-card"
+                data-target="splatoon3.html"
+            >
+
+                <img
+                    src="11040502-splatoon-3-nintendo-switch-front-cover.png"
+                    alt="Splatoon 3"
+                >
+
+            </a>
+
+
+        </div>
+
+
+    </main>
 
 
 
     <!-- ========================================
-         メインコンテンツ
+         アニメーション用
     ========================================= -->
 
-    <main>
+    <script>
+
+        const cards =
+            document.querySelectorAll(
+                ".game-card"
+            );
+
+        const overlay =
+            document.getElementById(
+                "focus-overlay"
+            );
 
 
-        <!-- ====================================
-             ラグとは？カード
-        ===================================== -->
-
-        <section class="article-card">
-
-            <div class="paper-clip"></div>
-
-            <p>
-                このサイトでは、Splatoon3のラグバグに関する情報を幅広くまとめています。
-                ラグの仕組みやタイミング、知識、テクニックなどを詳しく解説しています。
-            </p>
-
-        </section>
+        let opening = false;
 
 
+        /*
+         * ローディング演出の時間（ミリ秒）
+         */
 
-        <!-- ========================================
-             注意
-        ========================================= -->
+        const LOADING_DURATION = 1000;
 
-        <section class="notice">
 
-            <h3>
-                注意
-            </h3>
+        /*
+         * 移動アニメーションの時間（ミリ秒）
+         * ※ CSSのtransitionと合わせる
+         */
 
-            <p>
-                本サイトの情報は、Splatoon3におけるラグや通信、同期の仕組みを
-                理解することを目的として掲載しています。
-            </p>
-
-            <p>
-                本サイトに掲載されている情報を利用して、公開マッチでラグや通信の不具合、
-                同期のずれなどを意図的に発生・利用し、自分を有利にする行為は禁止します。
-            </p>
-
-            <p>
-                本サイトの情報を用いた検証や実験を行う場合は、
-                プライベートマッチなど、フレンド同士のみの環境で行ってください。
-            </p>
-
-            <p>
-                公開マッチでは、通常のゲームプレイを行い、
-                ゲームのルールや運営の定める規約を守ってください。
-            </p>
-
-        </section>
+        const MOVE_DURATION = 650;
 
 
 
-        <!-- ========================================
-             ひし形タイトルメニュー
-        ========================================= -->
+        /* ========================================
+           画像を画面内に収めるサイズを計算
+           （※ 元の表示サイズより拡大はしない）
+        ========================================= */
 
-<!-- ========================================
-     ひし形タイトルメニュー
-======================================== -->
+        function getTargetSize(
+            imageWidth,
+            imageHeight,
+            currentWidth,
+            currentHeight
+        ) {
 
-<section class="diamond-menu">
+            const viewportWidth =
+                window.innerWidth;
 
-
-    <!-- ====================================
-         ラグの知識
-    ==================================== -->
-
-    <div class="diamond-title">
-        <span>ラグの知識</span>
-    </div>
-
-
-    <!-- ラグの知識メニュー -->
-
-    <div class="lag-links">
-
-        <a href="#">ラグ1(Block)</a>
-
-        <a href="#">ラグ2(Limit)</a>
+            const viewportHeight =
+                window.innerHeight;
 
 
-        <a href="#">微ラグ1(Queue)</a>
+            /*
+             * 画面から少し余白を取る
+             */
 
-        <a href="#">微ラグ2(Packet Size Limit)</a>
+            const maxWidth =
+                viewportWidth * 0.82;
 
-        <a href="#">微ラグ3(Block/Unblock)</a>
-
-        <a href="#">遅延(Delay)</a>
-    </div>
-
-
-
-    <!-- ====================================
-         タイミング解説
-    ==================================== -->
-
-<!-- ====================================
-     タイミング解説
-==================================== -->
-
-<div class="diamond-title">
-    <span>タイミング解説</span>
-</div>
+            const maxHeight =
+                viewportHeight * 0.82;
 
 
-<!-- タイミング解説メニュー -->
+            /*
+             * 元画像の比率
+             */
 
-<div class="timing-links">
-
-    <a href="#">新浮き</a>
-
-    <a href="#">新ジャンプラグ</a>
-
-    <a href="#">新ジャンプラグ２</a>
-
-    <a href="#">ホコ増殖２</a>
-
-    <a href="#">ホコ増殖ジャンプ</a>
-
-    <a href="#">ホコじゃん</a>
-
-    <a href="#">持ち越しラグ</a>
-
-</div>
+            const ratio =
+                imageWidth /
+                imageHeight;
 
 
+            let width =
+                maxWidth;
 
-    <!-- ====================================
-         知っておくと便利
-    ==================================== -->
-
-    <div class="diamond-title">
-        <span>知っておくと便利</span>
-    </div>
+            let height =
+                width / ratio;
 
 
-</section>
+            /*
+             * 高さが大きすぎる場合
+             */
+
+            if (height > maxHeight) {
+
+                height =
+                    maxHeight;
+
+                width =
+                    height * ratio;
+
+            }
 
 
-        <!-- ========================================
-             検索
-        ========================================= -->
+            /*
+             * 現在カードに表示されているサイズより
+             * 大きくならないように制限する
+             * （拡大させない）
+             */
+
+            if (
+                width > currentWidth ||
+                height > currentHeight
+            ) {
+
+                const scaleW =
+                    currentWidth / width;
+
+                const scaleH =
+                    currentHeight / height;
+
+                const scale =
+                    Math.min(
+                        scaleW,
+                        scaleH,
+                        1
+                    );
+
+                width *= scale;
+
+                height *= scale;
+
+            }
+
+
+            return {
+                width,
+                height
+            };
+
+        }
 
 
 
-    </main>
+        /* ========================================
+           カードクリック
+        ========================================= */
+
+        cards.forEach(card => {
+
+            card.addEventListener(
+                "click",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    if (opening) {
+
+                        return;
+
+                    }
+
+
+                    opening = true;
+
+
+                    const image =
+                        card.querySelector(
+                            "img"
+                        );
+
+
+                    /*
+                     * 現在表示されている
+                     * カード画像の位置
+                     */
+
+                    const rect =
+                        image.getBoundingClientRect();
+
+
+
+                    /* ============================
+                       画像の元サイズ
+                    ============================ */
+
+                    const naturalWidth =
+                        image.naturalWidth;
+
+                    const naturalHeight =
+                        image.naturalHeight;
+
+
+                    /*
+                     * 画像がまだ読み込まれて
+                     * いない場合の保険
+                     */
+
+                    if (
+                        !naturalWidth ||
+                        !naturalHeight
+                    ) {
+
+                        window.location.href =
+                            card.dataset.target;
+
+                        return;
+
+                    }
+
+
+
+                    /* ============================
+                       中央表示サイズ
+                       （拡大なし・切り抜きなし）
+                    ============================ */
+
+                    const target =
+                        getTargetSize(
+                            naturalWidth,
+                            naturalHeight,
+                            rect.width,
+                            rect.height
+                        );
+
+
+
+                    /* ============================
+                       画面中央
+                    ============================ */
+
+                    const targetLeft =
+                        (
+                            window.innerWidth -
+                            target.width
+                        ) / 2;
+
+
+                    const targetTop =
+                        (
+                            window.innerHeight -
+                            target.height
+                        ) / 2;
+
+
+
+                    /* ============================
+                       複製画像を作成
+                    ============================ */
+
+                    const openingImage =
+                        image.cloneNode(true);
+
+
+                    openingImage.id =
+                        "opening-image";
+
+
+                    /*
+                     * 元画像と完全に同じ位置
+                     */
+
+                    openingImage.style.left =
+                        rect.left + "px";
+
+
+                    openingImage.style.top =
+                        rect.top + "px";
+
+
+                    openingImage.style.width =
+                        rect.width + "px";
+
+
+                    openingImage.style.height =
+                        rect.height + "px";
+
+
+
+                    /*
+                     * transitionを設定
+                     */
+
+                    openingImage.style.transition =
+                        [
+                            `left ${MOVE_DURATION}ms`,
+                            `top ${MOVE_DURATION}ms`,
+                            `width ${MOVE_DURATION}ms`,
+                            `height ${MOVE_DURATION}ms`
+                        ].join(", ");
+
+
+
+                    /*
+                     * bodyに追加
+                     */
+
+                    document.body.appendChild(
+                        openingImage
+                    );
+
+
+                    /*
+                     * 背景ぼかし開始
+                     */
+
+                    document.body.classList.add(
+                        "opening"
+                    );
+
+
+                    /*
+                     * 元画像を隠す
+                     */
+
+                    image.style.opacity =
+                        "0";
+
+
+
+                    /* ============================
+                       次のフレームで中央へ移動開始
+                       （ローディングはまだ出さない）
+                    ============================ */
+
+                    requestAnimationFrame(
+                        () => {
+
+                            requestAnimationFrame(
+                                () => {
+
+                                    openingImage.style.left =
+                                        targetLeft + "px";
+
+
+                                    openingImage.style.top =
+                                        targetTop + "px";
+
+
+                                    openingImage.style.width =
+                                        target.width + "px";
+
+
+                                    openingImage.style.height =
+                                        target.height + "px";
+
+                                }
+                            );
+
+                        }
+                    );
+
+
+
+                    /* ============================
+                       中央への移動が終わったあと、
+                       開く前にローディングを表示
+                    ============================ */
+
+                    setTimeout(
+                        () => {
+
+                            const spinner =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            spinner.id =
+                                "loading-spinner";
+
+
+                            spinner.style.left =
+                                targetLeft +
+                                target.width / 2 +
+                                "px";
+
+
+                            spinner.style.top =
+                                targetTop +
+                                target.height / 2 +
+                                "px";
+
+
+                            document.body.appendChild(
+                                spinner
+                            );
+
+
+                            requestAnimationFrame(
+                                () => {
+
+                                    spinner.classList.add(
+                                        "visible"
+                                    );
+
+                                }
+                            );
+
+
+
+                            /* ========================
+                               ローディングが終わったら
+                               ページ遷移
+                            ======================== */
+
+                            setTimeout(
+                                () => {
+
+                                    window.location.href =
+                                        card.dataset.target;
+
+                                },
+                                LOADING_DURATION
+                            );
+
+                        },
+                        MOVE_DURATION
+                    );
+
+                }
+            );
+
+        });
+
+
+
+        /* ========================================
+           オーバーレイクリック
+        ========================================= */
+
+        overlay.addEventListener(
+            "click",
+            function() {
+
+                if (!opening) {
+
+                    return;
+
+                }
+
+
+                resetOpening();
+
+            }
+        );
+
+
+
+        /* ========================================
+           ESCキー
+        ========================================= */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape" &&
+                    opening
+                ) {
+
+                    resetOpening();
+
+                }
+
+            }
+        );
+
+
+
+        /* ========================================
+           リセット
+        ========================================= */
+
+        function resetOpening() {
+
+            opening = false;
+
+
+            document.body.classList.remove(
+                "opening"
+            );
+
+
+            const openingImage =
+                document.getElementById(
+                    "opening-image"
+                );
+
+
+            if (openingImage) {
+
+                openingImage.remove();
+
+            }
+
+
+            const spinner =
+                document.getElementById(
+                    "loading-spinner"
+                );
+
+
+            if (spinner) {
+
+                spinner.remove();
+
+            }
+
+
+            cards.forEach(card => {
+
+                const image =
+                    card.querySelector("img");
+
+
+                image.style.opacity =
+                    "";
+
+            });
+
+        }
+
+
+
+        /* ========================================
+           戻るボタンで元のページに戻ったとき
+           （bfcacheからの復元時）に、開いた状態の
+           まま固まらないよう完全に初期状態へ戻す
+        ========================================= */
+
+        window.addEventListener(
+            "pageshow",
+            function() {
+
+                resetOpening();
+
+            }
+        );
+
+    </script>
 
 
 </body>
